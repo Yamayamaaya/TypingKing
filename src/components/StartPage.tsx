@@ -24,6 +24,8 @@ export const StartPage = ({
     .sort((a, b) => b.bestScore?.score - a.bestScore?.score)
     .slice(0, 10);
 
+  console.log(top10Users);
+
   return (
     <div className="flex flex-col items-center justify-center w-full">
       <div className="max-w-[90%] w-full px-4">
@@ -60,34 +62,38 @@ export const StartPage = ({
             <CardContent className="mt-6">
               <div className="grid gap-3">
                 <RankingCard
-                  name={users[0]?.name}
-                  score={users[0]?.bestScore?.score}
-                  date={users[0]?.bestScore.createdTime}
-                  imageUrl={users[0]?.iconImageUrl}
+                  name={top10Users[0]?.name}
+                  score={top10Users[0]?.bestScore?.score}
+                  date={top10Users[0]?.bestScore.createdTime}
+                  imageUrl={top10Users[0]?.iconImageUrl}
                   rank={1}
                 />
                 <RankingCard
-                  name={users[1]?.name}
-                  score={users[1]?.bestScore?.score}
-                  imageUrl={users[1]?.iconImageUrl}
+                  name={top10Users[1]?.name}
+                  score={top10Users[1]?.bestScore?.score}
+                  date={top10Users[1]?.bestScore.createdTime}
+                  imageUrl={top10Users[1]?.iconImageUrl}
                   rank={2}
                 />
                 <RankingCard
-                  name={users[2]?.name}
-                  score={users[2]?.bestScore?.score}
-                  imageUrl={users[2]?.iconImageUrl}
+                  name={top10Users[2]?.name}
+                  score={top10Users[2]?.bestScore?.score}
+                  date={top10Users[2]?.bestScore.createdTime}
+                  imageUrl={top10Users[2]?.iconImageUrl}
                   rank={3}
                 />
                 <RankingCard
-                  name={users[3]?.name}
-                  score={users[3]?.bestScore?.score}
-                  imageUrl={users[3]?.iconImageUrl}
+                  name={top10Users[3]?.name}
+                  score={top10Users[3]?.bestScore?.score}
+                  date={top10Users[3]?.bestScore.createdTime}
+                  imageUrl={top10Users[3]?.iconImageUrl}
                   rank={4}
                 />
                 <RankingCard
-                  name={users[4]?.name}
-                  score={users[4]?.bestScore?.score}
-                  imageUrl={users[4]?.iconImageUrl}
+                  name={top10Users[4]?.name}
+                  score={top10Users[4]?.bestScore?.score}
+                  date={top10Users[4]?.bestScore.createdTime}
+                  imageUrl={top10Users[4]?.iconImageUrl}
                   rank={5}
                 />
               </div>
