@@ -21,7 +21,7 @@ export const StartPage = ({
 
   const top10Users = users
     .filter((user) => user.bestScore)
-    .sort((a, b) => b.bestScore.score - a.bestScore.score)
+    .sort((a, b) => b.bestScore?.score - a.bestScore?.score)
     .slice(0, 10);
 
   return (
