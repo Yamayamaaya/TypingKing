@@ -54,7 +54,7 @@ export const challengesLevel2: TypingChallenge[] = [
   { label: "楽しいひととき", text: "たのしいひととき", level: 2 }, // 8文字
   { label: "真っ白な雪", text: "まっしろなゆき", level: 2 }, // 7文字
   { label: "優しい心", text: "やさしいこころ", level: 2 }, // 7文字
-  { label: "紅葉の季節", text: "もみじのきせつ", level: 2 }, // 7文字
+  { label: "紅葉の季節", text: "こうようのきせつ", level: 2 }, // 7文字
   { label: "家族の時間", text: "かぞくのじかん", level: 2 }, // 7文字
   { label: "友達との会話", text: "ともだちとのかいわ", level: 2 }, // 9文字
   { label: "素敵な景色", text: "すてきなけしき", level: 2 }, // 7文字
