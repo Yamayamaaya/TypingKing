@@ -165,7 +165,10 @@ export const SignInPage = () => {
             <button
               className="bg-gray-50 text-black px-4 py-2 rounded border border-black border-opacity-5 border-solid border-0.5
               cursor-pointer text-sm font-bold flex items-center gap-2"
-              onClick={handleGoogleSignInOrUp}
+              onClick={(e) => {
+                e.preventDefault(); // フォーム送信を防止
+                handleGoogleSignInOrUp();
+              }}
             >
               <img
                 src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg"
