@@ -194,19 +194,19 @@ export const GamePage = ({
     const userData = {
       bestScore: {
         score:
-          resultData.score > user.bestScore?.score || 0
+          resultData.score >= user.bestScore?.score || 0
             ? resultData.score
             : user.bestScore?.score || 0,
         wpm:
-          resultData.score > user.bestScore?.score || 0
+          resultData.score >= user.bestScore?.score || 0
             ? resultData.wpm
             : user.bestScore?.wpm || 0,
         mistakes:
-          resultData.score > user.bestScore?.score || 0
+          resultData.score >= user.bestScore?.score || 0
             ? resultData.mistakes
             : user.bestScore?.mistakes || 0,
         accuracy:
-          resultData.score > user.bestScore?.score || 0
+          resultData.score >= user.bestScore?.score || 0
             ? resultData.accuracy
             : user.bestScore?.accuracy || 0,
         createdTime: new Date(),

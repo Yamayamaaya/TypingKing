@@ -8,7 +8,7 @@ interface SoundContextProps {
 const SoundContext = createContext<SoundContextProps | undefined>(undefined);
 
 export const SoundProvider = ({ children }: { children: ReactNode }) => {
-  const [isSoundOn, setIsSoundOn] = useState(true);
+  const [isSoundOn, setIsSoundOn] = useState(false);
 
   const toggleSound = () => {
     setIsSoundOn((prev) => !prev);

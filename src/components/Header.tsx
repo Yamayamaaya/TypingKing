@@ -95,7 +95,7 @@ interface UserDrawerProps {
 
 const sidebarVariants = {
   open: {
-    clipPath: `circle(1500px at 50px 55px)`,
+    clipPath: `circle(2000px at 50px 55px)`,
     transition: {
       type: "spring",
       stiffness: 20,
