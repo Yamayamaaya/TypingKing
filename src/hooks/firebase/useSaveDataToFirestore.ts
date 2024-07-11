@@ -4,8 +4,9 @@ import {
   addDoc,
   doc,
   setDoc,
-} from 'firebase/firestore'
-import { useCallback } from 'react'
+  runTransaction,
+} from "firebase/firestore";
+import { useCallback } from "react";
 
 export const useSaveDataToFirestore = () => {
   const saveDataToFirestore = useCallback(
@@ -16,42 +17,40 @@ export const useSaveDataToFirestore = () => {
       subCollectionName?: string,
       subCollectionData?: any[]
     ): Promise<string> => {
-      // 返り値の型をPromise<string>に変更
-      const db = getFirestore()
-      let docRef
-      // 現在のタイムスタンプを取得
-      const timestamp = new Date()
+      const db = getFirestore();
+      let docRef: any;
+      const timestamp = new Date();
       const timestampData = {
         createdTime: timestamp,
         updatedTime: timestamp,
-      }
+      };
+
       if (id) {
-        docRef = doc(db, collectionName, id)
-        // updatedTimeのみ更新
-        await setDoc(
-          docRef,
-          { ...data, updatedTime: timestamp },
-          { merge: true }
-        )
+        docRef = doc(db, collectionName, id);
+        await runTransaction(db, async (transaction) => {
+          const docSnapshot = await transaction.get(docRef);
+          if (docSnapshot.exists()) {
+            transaction.update(docRef, { ...data, updatedTime: timestamp });
+          } else {
+            transaction.set(docRef, { ...timestampData, ...data });
+          }
+        });
       } else {
-        docRef = await addDoc(collection(db, collectionName), {
-          ...timestampData,
-          ...data,
-        })
+        docRef = doc(collection(db, collectionName));
+        await setDoc(docRef, { ...timestampData, ...data });
       }
 
       if (subCollectionName && subCollectionData) {
-        const subCollectionRef = collection(docRef, subCollectionName)
+        const subCollectionRef = collection(docRef, subCollectionName);
         for (const item of subCollectionData) {
-          // サブコレクションの各ドキュメントにもタイムスタンプを設定
-          await addDoc(subCollectionRef, { ...timestampData, ...item })
+          await addDoc(subCollectionRef, { ...timestampData, ...item });
         }
       }
 
-      return docRef.id // 保存したドキュメントのidを返す
+      return docRef.id;
     },
     []
-  )
+  );
 
-  return saveDataToFirestore
-}
+  return saveDataToFirestore;
+};
