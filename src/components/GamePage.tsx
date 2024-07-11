@@ -71,7 +71,15 @@ export const GamePage = ({
   }, [time]);
 
   const getNextChallenge = useCallback(() => {
-    const level = Math.min(Math.floor(consecutiveSuccess / 5) + 1, 5);
+    const getLevel = (successCount: number) => {
+      if (successCount >= 40) return 5;
+      if (successCount >= 25) return 4;
+      if (successCount >= 15) return 3;
+      if (successCount >= 5) return 2;
+      return 1;
+    };
+
+    const level = getLevel(consecutiveSuccess);
     const availableChallenges = (() => {
       switch (level) {
         case 1:
@@ -120,6 +128,9 @@ export const GamePage = ({
         setCorrectInputCount(correctInputCount + 1);
         if (isSoundOn) playSuccess();
 
+        // 基礎得点として10点を追加
+        setScore(score + 5);
+
         const updatedRomajiList = currentChallengeRomajiList.filter((romaji) =>
           romaji.startsWith(inputValue + inputChar)
         );
@@ -141,9 +152,13 @@ export const GamePage = ({
         ) {
           let points = currentChallenge.text.length * 10;
 
-          if (consecutiveSuccess + 1 === 5) points += 50;
-          if (consecutiveSuccess + 1 === 10) points += 100;
-          if (consecutiveSuccess + 1 === 20) points += 250;
+          if (consecutiveSuccess + 1 === 5) points += 20;
+          if (consecutiveSuccess + 1 === 10) points += 50;
+          if (
+            consecutiveSuccess + 1 === 20 ||
+            (consecutiveSuccess + 1 > 20 && (consecutiveSuccess + 1) % 10 === 0)
+          )
+            points += 100;
 
           switch (currentChallenge.level) {
             case 1:
@@ -194,19 +209,19 @@ export const GamePage = ({
     const userData = {
       bestScore: {
         score:
-          resultData.score >= user.bestScore?.score || 0
+          resultData.score >= (user.bestScore?.score || 0)
             ? resultData.score
             : user.bestScore?.score || 0,
         wpm:
-          resultData.score >= user.bestScore?.score || 0
+          resultData.score >= (user.bestScore?.score || 0)
             ? resultData.wpm
             : user.bestScore?.wpm || 0,
         mistakes:
-          resultData.score >= user.bestScore?.score || 0
+          resultData.score >= (user.bestScore?.score || 0)
             ? resultData.mistakes
             : user.bestScore?.mistakes || 0,
         accuracy:
-          resultData.score >= user.bestScore?.score || 0
+          resultData.score >= (user.bestScore?.score || 0)
             ? resultData.accuracy
             : user.bestScore?.accuracy || 0,
         createdTime: new Date(),
