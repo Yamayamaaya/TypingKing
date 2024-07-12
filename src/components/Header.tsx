@@ -139,11 +139,18 @@ const UserDrawer: React.FC<UserDrawerProps> = ({ isOpen, handleToggle }) => {
             onClick={handleToggle}
             style={{ cursor: "pointer" }}
           >
-            <Navigate href={pagesPath.$url()}>
+            <a
+              //  リロード
+              onClick={() => {
+                setTimeout(() => {
+                  window.location.reload();
+                }, 260);
+              }}
+            >
               <p className="text-gray-700 hover:text-black hover:font-semibold my-2 ">
                 トップページ
               </p>
-            </Navigate>
+            </a>
           </motion.div>
           <motion.div
             variants={itemVariants}
