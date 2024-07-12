@@ -15,6 +15,7 @@ import { User } from "../types/user";
 import { useSaveDataToFirestore } from "../hooks/firebase/useSaveDataToFirestore";
 import useSound from "use-sound";
 import { useSoundContext } from "../feature/sound/soundProvider";
+import { useRouter } from "next/router";
 
 export const GamePage = ({
   setState,
@@ -60,6 +61,8 @@ export const GamePage = ({
   const [playSuccess] = useSound("/sounds/type.mp3");
   const [playError] = useSound("/sounds/miss.mp3");
   const [playPoint] = useSound("/sounds/point.mp3");
+
+  const router = useRouter();
 
   useEffect(() => {
     if (time > 0) {
@@ -298,7 +301,7 @@ export const GamePage = ({
       className="flex flex-col items-center justify-center h-full overflow-hidden
     w-full "
     >
-      <div className="flex items-center justify-between w-full max-w-4xl px-4 mb-4 ">
+      <div className="flex items-center justify-between w-[94%] max-w-4xl px-4 mb-4 mx-auto z-10">
         <div className="text-3xl font-bold text-white flex items-center">
           Combo:
           <span
@@ -341,8 +344,7 @@ export const GamePage = ({
           <ProgressBar time={time} initialTime={INITIAL_TIME} />
         </div>
       </div>
-
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-4xl z-10">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-[94%] max-w-4xl mx-auto z-10">
         <p className="text-xl font-medium mb-4 text-gray-800">
           {currentChallenge ? currentChallenge.label : "Loading..."}
         </p>
@@ -361,6 +363,21 @@ export const GamePage = ({
           />
         </div>
       </div>
+      <div className="flex justify-between w-[94%] max-w-4xl mt-4 mx-auto z-10">
+        <button
+          onClick={() => setState("start")}
+          className="inline-flex items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+        >
+          ホームへ戻る
+        </button>
+        <button
+          onClick={() => setState("count")}
+          className="inline-flex items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+        >
+          もう一度遊ぶ
+        </button>
+      </div>
+
       <div
         className="fixed bottom-[49px] left-0 right-0 w-full flex justify-center z-0 transition-opacity duration-1000 ease-in-out"
         style={{ opacity: consecutiveSuccess > 66 ? 1 : 0 }}

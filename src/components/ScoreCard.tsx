@@ -95,7 +95,7 @@ export const ScoreCard: React.FC<ScoreCardProps> = ({
             <PercentIcon className="w-6 h-6 text-muted-foreground" />
             <div className="text-sm font-medium">
               <span className="text-lg font-bold mr-1">
-                {result ? result.accuracy : user?.bestScore.accuracy}%
+                {(result ? result.accuracy : user?.bestScore.accuracy) || "--"}%
               </span>
               Accuracy
             </div>
