@@ -24,6 +24,10 @@ class MyDocument extends Document {
           <meta property="og:site_name" content="TypingKing" />
           {/* OGP ロケール */}
           <meta property="og:locale" content="ja_JP" />
+          <meta
+            name="google-adsense-account"
+            content="ca-pub-6440158674192420"
+          />
         </Head>
 
         <body>
