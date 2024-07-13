@@ -99,3 +99,34 @@ export const useUsersOnce = () => {
 
   return { users, loading, error };
 };
+
+export const useUsersByIDsOnce = (ids: string[]) => {
+  const [users, setUsers] = useState<User[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const db = getFirestore();
+        const usersCollectionRef = collection(db, "users");
+        const snapshot = await getDocs(usersCollectionRef);
+        setUsers(
+          snapshot.docs
+            .filter((doc) => ids.includes(doc.id))
+            .map((doc) => {
+              return { ...doc.data(), id: doc.id } as User;
+            })
+        );
+      } catch (error) {
+        setError(error as Error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUsers();
+  }, [ids]);
+
+  return { users, loading, error };
+};

@@ -17,6 +17,7 @@ export type User = {
   bestWpm: number;
   bestMistakes: number;
   bestAccuracy: number;
+  friends: string[];
   createdTime: Timestamp;
   updatedTime: Timestamp;
 };
@@ -36,6 +37,7 @@ export const userPropertiesLabel = {
   bestWpm: "WPM",
   bestMistakes: "ミス数",
   bestAccuracy: "正確性",
+  friends: "フレンドID",
   createdTime: "作成日",
   updatedTime: "更新日",
 };
