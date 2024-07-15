@@ -51,6 +51,7 @@ const FriendsPage: React.FC = () => {
   const { user, loading: userLoading } = useUserById(authUser?.uid || "");
   const { users, loading: usersLoading } = useUsersOnce();
   const [searchResults, setSearchResults] = React.useState<any[]>([]);
+  const [isPopoverOpen, setIsPopoverOpen] = React.useState(false);
 
   const fuse = new Fuse(users, {
     keys: ["id", "name"],
@@ -59,6 +60,11 @@ const FriendsPage: React.FC = () => {
   const handleSearch = (pattern: string) => {
     const result = fuse.search(pattern);
     setSearchResults(result.map((res) => res.item));
+    setIsPopoverOpen(true);
+  };
+
+  const handleClickOutside = () => {
+    setIsPopoverOpen(false);
   };
 
   return (
@@ -70,11 +76,20 @@ const FriendsPage: React.FC = () => {
       loading={false}
       isLimitWidth={false}
     >
-      <div className="flex flex-col h-full bg-white w-[80%] my-6 rounded-lg shadow-lg">
+      <div
+        className="flex flex-col h-full bg-white w-[80%] my-6 rounded-lg shadow-lg"
+        onClick={handleClickOutside}
+      >
         <div className="bg-primary text-primary-foreground p-4 flex items-center justify-between">
           <h2 className="text-xl font-bold">Friends</h2>
-          <div className="relative flex items-center w-[35%] min-w-[200px]">
-            <Popover>
+          <div
+            className="relative flex items-center w-[35%] min-w-[200px]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Popover
+              isOpen={isPopoverOpen}
+              onClose={() => setIsPopoverOpen(false)}
+            >
               <PopoverTrigger>
                 <input
                   className="h-10 w-full border rounded-md pl-3 pr-3 py-2 text-sm"
@@ -105,8 +120,7 @@ const FriendsPage: React.FC = () => {
           <Tabs>
             <TabList>
               <Tab>通常フレンド</Tab>
-              <Tab>フレンドリクエスト送信済み</Tab>
-              <Tab>フレンドリクエスト承認待ち</Tab>
+              <Tab>フレンドリクエスト</Tab>
             </TabList>
 
             <TabPanels>
@@ -122,20 +136,10 @@ const FriendsPage: React.FC = () => {
               <TabPanel>
                 <div className="grid gap-4">
                   {testUsers
-                    .filter((user) => user.status === "sent")
-                    .map((user) => (
-                      <FriendItem
-                        key={user.id}
-                        name={user.name}
-                        status={user.status}
-                      />
-                    ))}
-                </div>
-              </TabPanel>
-              <TabPanel>
-                <div className="grid gap-4">
-                  {testUsers
-                    .filter((user) => user.status === "pending")
+                    .filter(
+                      (user) =>
+                        user.status === "sent" || user.status === "pending"
+                    )
                     .map((user) => (
                       <FriendItem
                         key={user.id}
